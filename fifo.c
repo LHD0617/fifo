@@ -8,6 +8,7 @@
  */
 
 /* @include */
+#include <stdlib.h>
 #include "fifo.h"
 
 /**
@@ -16,10 +17,10 @@
   */
 fifo_cb* fifo_create(uint32 size)
 {
-    fifo_cb* cb = malloc(sizeof(fifo_cb));
+    fifo_cb* cb = (fifo_cb*)malloc(sizeof(fifo_cb));
     if(cb == FIFO_NULL)  return FIFO_NULL;
     cb->size = size + 1;
-    cb->base = malloc(sizeof(uint8) * (size + 1));
+    cb->base = (uint8*)malloc(sizeof(uint8) * (size + 1));
     if(cb->base == FIFO_NULL) return FIFO_NULL;
     cb->head = 0;
     cb->tail = 0;

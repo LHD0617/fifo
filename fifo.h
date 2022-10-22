@@ -42,7 +42,7 @@ typedef struct
 
 /* @Function declaration */
 fifo_cb* fifo_create(uint32 size);
-uint32 fifo_getAvailable(fifo_cb cb);
+uint32 fifo_getAvailable(fifo_cb* cb);
 uint32 fifo_getUsed(fifo_cb* cb);
 fifo_err fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len);
 fifo_err fifo_popbuf(fifo_cb* cb, uint8* dat, uint32 len);
