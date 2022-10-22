@@ -17,12 +17,12 @@ typedef         unsigned int            uint32;
 typedef         uint8                   fifo_err;
 
 /* @define */
-#define         FIFO_NULL               0x00
-#define         FIFO_ERROR_SUCCESS      0x00
-#define         FIFO_ERROR_NOTSPACE     0x01
-#define         FIFO_ERROR_NOTDATA      0x02
-#define         FIFO_ERROR_NOTEXIST     0x03
-#define         FIFO_ERROR_OUTRANGE     0x04
+#define         FIFO_NULL               0x00    /* 空类型   */
+#define         FIFO_ERROR_SUCCESS      0x00    /* 成功     */
+#define         FIFO_ERROR_NOTSPACE     0x01    /* 空间不足 */
+#define         FIFO_ERROR_NOTDATA      0x02    /* 数据不足 */
+#define         FIFO_ERROR_NOTEXIST     0x03    /* 不存在   */
+#define         FIFO_ERROR_OUTRANGE     0x04    /* 超出范围 */
 
 /* fifo溢出使能，若开启此宏定义则在写入队列时不再判断队列是否为满队，溢出部分直接覆盖老数据 */
 #define         FIFO_OVERFLOW_EN        0x00
