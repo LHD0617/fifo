@@ -53,6 +53,15 @@ uint32 fifo_getUsed(fifo_cb* cb)
 uint8 fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
+#if FIFO_OVERFLOW_EN
+    while(len--)
+    {
+        *(cb->base + cb->tail) = *(dat++);
+        cb->tail = (cb->tail + 1) % cb->size;
+        if(cb->tail == cb->head) cb->head = (cb->head + 1) % cb->size;
+    }
+    return FIFO_ERROR_SUCCESS;
+#else
     if(fifo_getAvailable(cb) >= len)
     {
         while(len--)
@@ -63,6 +72,7 @@ uint8 fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len)
         return FIFO_ERROR_SUCCESS;
     }
     return FIFO_ERROR_NOTSPACE;
+#endif
 }
 
 /**

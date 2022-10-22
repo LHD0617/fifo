@@ -7,6 +7,9 @@
   |2022-10-21    |满心欢喜     |Initial build     	|1.0.0
  */
 
+#ifndef __FIFO_H_
+#define __FIFO_H_
+
 /* @typedef */
 typedef         unsigned char           uint8;
 typedef         int                     int32;
@@ -19,6 +22,9 @@ typedef         unsigned int            uint32;
 #define         FIFO_ERROR_NOTDATA      0x02
 #define         FIFO_ERROR_NOTEXIST     0x03
 #define         FIFO_ERROR_OUTRANGE     0x04
+
+/* fifo溢出使能，若开启此宏定义则在写入队列时不再判断队列是否为满队，溢出部分直接覆盖老数据 */
+#define         FIFO_OVERFLOW_EN        0x01
 
 
 /* @struct */
@@ -40,3 +46,7 @@ uint32 fifo_getUsed(fifo_cb* cb);
 uint8 fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len);
 uint8 fifo_popbuf(fifo_cb* cb, uint8* dat, uint32 len);
 uint8 fifo_query(fifo_cb* cb, uint8* dat, uint32 index);
+
+
+#endif
+
