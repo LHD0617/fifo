@@ -48,9 +48,9 @@ uint32 fifo_getUsed(fifo_cb* cb)
 
 /**
     * @name		fifo_pushbuf
-    * @brief  	入队列
+    * @brief  	写入buf
   */
-uint8 fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len)
+fifo_err fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
 #if FIFO_OVERFLOW_EN
@@ -77,9 +77,9 @@ uint8 fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len)
 
 /**
     * @name		fifo_popbuf
-    * @brief  	出队列
+    * @brief  	读取buf
   */
-uint8 fifo_popbuf(fifo_cb* cb, uint8* dat, uint32 len)
+fifo_err fifo_popbuf(fifo_cb* cb, uint8* dat, uint32 len)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
     if(fifo_getUsed(cb) >= len)
@@ -95,12 +95,52 @@ uint8 fifo_popbuf(fifo_cb* cb, uint8* dat, uint32 len)
 }
 
 /**
+    * @name		fifo_pushbyte
+    * @brief  	写入字节
+  */
+fifo_err fifo_pushbyte(fifo_cb* cb, uint8 dat)
+{
+    if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
+#if FIFO_OVERFLOW_EN
+    *(cb->base + cb->tail) = dat;
+    cb->tail = (cb->tail + 1) % cb->size;
+    if(cb->tail == cb->head) cb->head = (cb->head + 1) % cb->size;
+    return FIFO_ERROR_SUCCESS;
+#else
+    if(fifo_getAvailable(cb) >= 1)
+    {
+        *(cb->base + cb->tail) = dat;
+        cb->tail = (cb->tail + 1) % cb->size;
+        return FIFO_ERROR_SUCCESS;
+    }
+    return FIFO_ERROR_NOTSPACE;
+#endif
+}
+
+/**
+    * @name		fifo_popbyte
+    * @brief  	读取字节
+  */
+fifo_err fifo_popbyte(fifo_cb* cb, uint8* dat)
+{
+    if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
+    if(fifo_getUsed(cb) >= 1)
+    {
+        *dat = *(cb->base + cb->head);
+        cb->head = (cb->head + 1) % cb->size;
+        return FIFO_ERROR_SUCCESS;
+    }
+    return FIFO_ERROR_NOTDATA;
+}
+
+/**
     * @name		fifo_query
     * @brief  	查询队列内数据
   */
-uint8 fifo_query(fifo_cb* cb, uint8* dat, uint32 index)
+fifo_err fifo_query(fifo_cb* cb, uint8* dat, uint32 index)
 {
     if(index >= fifo_getUsed(cb)) return FIFO_ERROR_OUTRANGE;
     *dat = *(cb->base + ((cb->head + index) % cb->size));
     return FIFO_ERROR_SUCCESS;
 }
+
