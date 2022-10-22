@@ -48,10 +48,10 @@ uint32 fifo_getUsed(fifo_cb* cb)
 }
 
 /**
-    * @name		fifo_pushbuf
+    * @name		fifo_pushBuf
     * @brief  	写入buf
   */
-fifo_err fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len)
+fifo_err fifo_pushBuf(fifo_cb* cb, uint8* dat, uint32 len)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
 #if FIFO_OVERFLOW_EN
@@ -77,10 +77,10 @@ fifo_err fifo_pushbuf(fifo_cb* cb, uint8* dat, uint32 len)
 }
 
 /**
-    * @name		fifo_popbuf
+    * @name		fifo_popBuf
     * @brief  	读取buf
   */
-fifo_err fifo_popbuf(fifo_cb* cb, uint8* dat, uint32 len)
+fifo_err fifo_popBuf(fifo_cb* cb, uint8* dat, uint32 len)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
     if(fifo_getUsed(cb) >= len)
@@ -96,10 +96,10 @@ fifo_err fifo_popbuf(fifo_cb* cb, uint8* dat, uint32 len)
 }
 
 /**
-    * @name		fifo_pushbyte
+    * @name		fifo_pushByte
     * @brief  	写入字节
   */
-fifo_err fifo_pushbyte(fifo_cb* cb, uint8 dat)
+fifo_err fifo_pushByte(fifo_cb* cb, uint8 dat)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
 #if FIFO_OVERFLOW_EN
@@ -119,10 +119,10 @@ fifo_err fifo_pushbyte(fifo_cb* cb, uint8 dat)
 }
 
 /**
-    * @name		fifo_popbyte
+    * @name		fifo_popByte
     * @brief  	读取字节
   */
-fifo_err fifo_popbyte(fifo_cb* cb, uint8* dat)
+fifo_err fifo_popByte(fifo_cb* cb, uint8* dat)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
     if(fifo_getUsed(cb) >= 1)
