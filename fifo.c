@@ -28,6 +28,16 @@ fifo_cb* fifo_create(uint32 size)
 }
 
 /**
+    * @name		fifo_delete
+    * @brief  	删除fifo
+  */
+void fifo_delete(fifo_cb* cb)
+{
+    free(cb->base);
+    free(cb);
+}
+
+/**
     * @name		fifo_getAvailable
     * @brief  	获取可用空间
   */
