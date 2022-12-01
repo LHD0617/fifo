@@ -50,7 +50,7 @@ fifo_err fifo_popBuf(fifo_cb* cb, uint8* dat, uint32 len);
 fifo_err fifo_pushByte(fifo_cb* cb, uint8 dat);
 fifo_err fifo_popByte(fifo_cb* cb, uint8* dat);
 fifo_err fifo_query(fifo_cb* cb, uint8* dat, uint32 index);
-
+fifo_err fifo_clean(fifo_cb* cb);
 
 #endif
 

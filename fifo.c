@@ -150,8 +150,19 @@ fifo_err fifo_popByte(fifo_cb* cb, uint8* dat)
   */
 fifo_err fifo_query(fifo_cb* cb, uint8* dat, uint32 index)
 {
+    if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
     if(index >= fifo_getUsed(cb)) return FIFO_ERROR_OUTRANGE;
     *dat = *(cb->base + ((cb->head + index) % cb->size));
     return FIFO_ERROR_SUCCESS;
 }
 
+/**
+    * @name		fifo_clean
+    * @brief  	清空队列
+  */
+fifo_err fifo_clean(fifo_cb* cb)
+{
+    if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
+    cb->tail = cb->head;
+    return FIFO_ERROR_SUCCESS;
+}
