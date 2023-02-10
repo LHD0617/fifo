@@ -1,20 +1,22 @@
-/*
- * Copyright (C), 1988-1999, Xxxxxx Tech. Co., Ltd.
- * FileName: fifo.h
- * Description: 环形存储
- * Change Logs:
-  |Date          |Author       |Notes     			|version
-  |2022-10-21    |满心欢喜     |Initial build     	|1.0.0
+/**
+ * @file fifo.h
+ * @author 满心欢喜
+ * @brief 环形队列存储
+ * @version 0.1
+ * @date 2023-02-10
+ * 
+ * @copyright Copyright (c) 2023
+ * struct
  */
 
 #ifndef __FIFO_H_
 #define __FIFO_H_
 
 /* @typedef */
-typedef         unsigned char           uint8;
-typedef         int                     int32;
-typedef         unsigned int            uint32;
-typedef         uint8                   fifo_err;
+typedef         unsigned char           fifo_uint8;
+typedef         int                     fifo_int32;
+typedef         unsigned int            fifo_uint32;
+typedef         fifo_uint8              fifo_err;
 
 /* @define */
 #define         FIFO_NULL               0x00    /* 空类型   */
@@ -31,26 +33,25 @@ typedef         uint8                   fifo_err;
 /* @struct */
 typedef struct
 {
-    int32 head;     /* 数据头 */
+    fifo_int32 head;     /* 数据头 */
 
-    int32 tail;     /* 数据尾 */
+    fifo_int32 tail;     /* 数据尾 */
 
-    int32 size;     /* 空间大小 */
+    fifo_int32 size;     /* 空间大小 */
 
-    uint8* base;    /* 数据地址 */
+    fifo_uint8* base;    /* 数据地址 */
 }fifo_cb;
 
 /* @Function declaration */
-fifo_cb* fifo_create(uint32 size);
+fifo_cb* fifo_create(fifo_uint32 size);
 void fifo_delete(fifo_cb* cb);
-uint32 fifo_getAvailable(fifo_cb* cb);
-uint32 fifo_getUsed(fifo_cb* cb);
-fifo_err fifo_pushBuf(fifo_cb* cb, uint8* dat, uint32 len);
-fifo_err fifo_popBuf(fifo_cb* cb, uint8* dat, uint32 len);
-fifo_err fifo_pushByte(fifo_cb* cb, uint8 dat);
-fifo_err fifo_popByte(fifo_cb* cb, uint8* dat);
-fifo_err fifo_query(fifo_cb* cb, uint8* dat, uint32 index);
+fifo_uint32 fifo_getAvailable(fifo_cb* cb);
+fifo_uint32 fifo_getUsed(fifo_cb* cb);
+fifo_err fifo_pushBuf(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 len);
+fifo_err fifo_popBuf(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 len);
+fifo_err fifo_pushByte(fifo_cb* cb, fifo_uint8 dat);
+fifo_err fifo_popByte(fifo_cb* cb, fifo_uint8* dat);
+fifo_err fifo_query(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 index);
 fifo_err fifo_clean(fifo_cb* cb);
 
 #endif
-

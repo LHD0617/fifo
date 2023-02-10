@@ -1,10 +1,12 @@
-/*
- * Copyright (C), 1988-1999, Xxxxxx Tech. Co., Ltd.
- * FileName: fifo.c
- * Description: 环形存储
- * Change Logs:
-  |Date          |Author       |Notes     			|version
-  |2022-10-21    |满心欢喜     |Initial build     	|1.0.0
+/**
+ * @file fifo.c
+ * @author 满心欢喜
+ * @brief 环形队列存储
+ * @version 0.1
+ * @date 2023-02-10
+ * 
+ * @copyright Copyright (c) 2023
+ * 
  */
 
 /* @include */
@@ -12,15 +14,17 @@
 #include "fifo.h"
 
 /**
-    * @name		fifo_create
-    * @brief  	创建fifo
-  */
-fifo_cb* fifo_create(uint32 size)
+ * @brief 创建fifo
+ * 
+ * @param size 空间大小
+ * @return fifo_cb* 对象指针 若为FIFO_NULL 则创建失败
+ */
+fifo_cb* fifo_create(fifo_uint32 size)
 {
     fifo_cb* cb = (fifo_cb*)malloc(sizeof(fifo_cb));
     if(cb == FIFO_NULL)  return FIFO_NULL;
     cb->size = size + 1;
-    cb->base = (uint8*)malloc(sizeof(uint8) * (size + 1));
+    cb->base = (fifo_uint8*)malloc(sizeof(fifo_uint8) * (size + 1));
     if(cb->base == FIFO_NULL) return FIFO_NULL;
     cb->head = 0;
     cb->tail = 0;
@@ -28,9 +32,10 @@ fifo_cb* fifo_create(uint32 size)
 }
 
 /**
-    * @name		fifo_delete
-    * @brief  	删除fifo
-  */
+ * @brief 删除fifo
+ * 
+ * @param cb 对象指针
+ */
 void fifo_delete(fifo_cb* cb)
 {
     free(cb->base);
@@ -38,30 +43,38 @@ void fifo_delete(fifo_cb* cb)
 }
 
 /**
-    * @name		fifo_getAvailable
-    * @brief  	获取可用空间
-  */
-uint32 fifo_getAvailable(fifo_cb* cb)
+ * @brief 获取可用空间
+ * 
+ * @param cb 对象指针
+ * @return fifo_uint32 可用空间大小
+ */
+fifo_uint32 fifo_getAvailable(fifo_cb* cb)
 {
     if(cb == FIFO_NULL) return 0;
     return (cb->size - ((cb->tail - cb->head + cb->size) % cb->size)) - 1;
 }
 
 /**
-    * @name		fifo_getUsed
-    * @brief  	获取已用空间
-  */
-uint32 fifo_getUsed(fifo_cb* cb)
+ * @brief 获取已用空间
+ * 
+ * @param cb 对象指针
+ * @return fifo_uint32 已用空间大小
+ */
+fifo_uint32 fifo_getUsed(fifo_cb* cb)
 {
     if(cb == FIFO_NULL) return 0;
     return (cb->tail - cb->head + cb->size) % cb->size;
 }
 
 /**
-    * @name		fifo_pushBuf
-    * @brief  	写入buf
-  */
-fifo_err fifo_pushBuf(fifo_cb* cb, uint8* dat, uint32 len)
+ * @brief 写入buf
+ * 
+ * @param cb 对象指针
+ * @param dat 数据地址
+ * @param len 数据长度
+ * @return fifo_err 错误码
+ */
+fifo_err fifo_pushBuf(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 len)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
 #if FIFO_OVERFLOW_EN
@@ -87,10 +100,14 @@ fifo_err fifo_pushBuf(fifo_cb* cb, uint8* dat, uint32 len)
 }
 
 /**
-    * @name		fifo_popBuf
-    * @brief  	读取buf
-  */
-fifo_err fifo_popBuf(fifo_cb* cb, uint8* dat, uint32 len)
+ * @brief 读取buf
+ * 
+ * @param cb 对象指针
+ * @param dat 数据地址
+ * @param len 数据长度
+ * @return fifo_err 错误码
+ */
+fifo_err fifo_popBuf(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 len)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
     if(fifo_getUsed(cb) >= len)
@@ -106,10 +123,13 @@ fifo_err fifo_popBuf(fifo_cb* cb, uint8* dat, uint32 len)
 }
 
 /**
-    * @name		fifo_pushByte
-    * @brief  	写入字节
-  */
-fifo_err fifo_pushByte(fifo_cb* cb, uint8 dat)
+ * @brief 写入字节
+ * 
+ * @param cb 对象指针
+ * @param dat 数据
+ * @return fifo_err 错误码
+ */
+fifo_err fifo_pushByte(fifo_cb* cb, fifo_uint8 dat)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
 #if FIFO_OVERFLOW_EN
@@ -129,10 +149,13 @@ fifo_err fifo_pushByte(fifo_cb* cb, uint8 dat)
 }
 
 /**
-    * @name		fifo_popByte
-    * @brief  	读取字节
-  */
-fifo_err fifo_popByte(fifo_cb* cb, uint8* dat)
+ * @brief 读取字节
+ * 
+ * @param cb 对象指针
+ * @param dat 数据地址
+ * @return fifo_err 错误码
+ */
+fifo_err fifo_popByte(fifo_cb* cb, fifo_uint8* dat)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
     if(fifo_getUsed(cb) >= 1)
@@ -145,10 +168,14 @@ fifo_err fifo_popByte(fifo_cb* cb, uint8* dat)
 }
 
 /**
-    * @name		fifo_query
-    * @brief  	查询队列内数据
-  */
-fifo_err fifo_query(fifo_cb* cb, uint8* dat, uint32 index)
+ * @brief 查询队列内数据
+ * 
+ * @param cb 对象指针
+ * @param dat 数据地址
+ * @param index 数据序号
+ * @return fifo_err 错误码
+ */
+fifo_err fifo_query(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 index)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
     if(index >= fifo_getUsed(cb)) return FIFO_ERROR_OUTRANGE;
@@ -157,9 +184,11 @@ fifo_err fifo_query(fifo_cb* cb, uint8* dat, uint32 index)
 }
 
 /**
-    * @name		fifo_clean
-    * @brief  	清空队列
-  */
+ * @brief 清空队列
+ * 
+ * @param cb 对象指针
+ * @return fifo_err 错误码
+ */
 fifo_err fifo_clean(fifo_cb* cb)
 {
     if(cb == FIFO_NULL) return FIFO_ERROR_NOTEXIST;
