@@ -21,7 +21,7 @@
  */
 fifo_cb_t* fifo_create(fifo_uint32 size)
 {
-    fifo_cb_t* cb = (fifo_cb_t*)FIFO_MALLOC(sizeof(fifo_cb_t) + sizeof(fifo_uint8) * (size + 1));
+    fifo_cb_t* cb = (fifo_cb_t*)FIFO_MALLOC(sizeof(fifo_cb_t) + size + 1);
     if(!cb)  return FIFO_NULL;
     cb->size = size + 1;
     cb->head = 0;
@@ -36,7 +36,6 @@ fifo_cb_t* fifo_create(fifo_uint32 size)
  */
 void fifo_delete(fifo_cb_t* cb)
 {
-    FIFO_FREE(cb->base);
     FIFO_FREE(cb);
     cb = FIFO_NULL;
 }
