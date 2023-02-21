@@ -23,7 +23,7 @@ typedef         fifo_uint8              fifo_err;
 #define         FIFO_MALLOC             malloc      /* 空间申请接口 */
 #define         FIFO_FREE               free        /* 空间释放接口 */
 
-#define         FIFO_NULL               0x00        /* 空类型   */
+#define         FIFO_NULL               NULL        /* 空类型   */
 #define         FIFO_ERROR_SUCCESS      0x00        /* 成功     */
 #define         FIFO_ERROR_NOTSPACE     0x01        /* 空间不足 */
 #define         FIFO_ERROR_NOTDATA      0x02        /* 数据不足 */
