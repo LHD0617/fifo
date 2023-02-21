@@ -43,13 +43,13 @@ typedef         fifo_uint8              fifo_err;
  */
 typedef struct
 {
-    fifo_int32 head;     /* 数据头 */
+    fifo_int32 head;        /* 数据头 */
 
-    fifo_int32 tail;     /* 数据尾 */
+    fifo_int32 tail;        /* 数据尾 */
 
-    fifo_int32 size;     /* 空间大小 */
+    fifo_int32 size;        /* 空间大小 */
 
-    fifo_uint8* base;    /* 数据地址 */
+    fifo_uint8 base[];      /* 数据地址 */
 }fifo_cb_t;
 
 #pragma pack() // 恢复默认字节对齐

@@ -21,15 +21,9 @@
  */
 fifo_cb_t* fifo_create(fifo_uint32 size)
 {
-    fifo_cb_t* cb = (fifo_cb_t*)FIFO_MALLOC(sizeof(fifo_cb_t));
-    if(cb == FIFO_NULL)  return FIFO_NULL;
+    fifo_cb_t* cb = (fifo_cb_t*)FIFO_MALLOC(sizeof(fifo_cb_t) + sizeof(fifo_uint8) * (size + 1));
+    if(!cb)  return FIFO_NULL;
     cb->size = size + 1;
-    cb->base = (fifo_uint8*)FIFO_MALLOC(sizeof(fifo_uint8) * (size + 1));
-    if(cb->base == FIFO_NULL)
-    {
-        FIFO_FREE(cb);
-        return FIFO_NULL;
-    }
     cb->head = 0;
     cb->tail = 0;
     return cb;
