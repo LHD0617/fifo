@@ -31,6 +31,12 @@ typedef         fifo_uint8              fifo_err;
 
 
 /* @struct */
+#pragma pack(1) // 单字节对齐
+
+/**
+ * @brief 队列控制块
+ * 
+ */
 typedef struct
 {
     fifo_int32 head;     /* 数据头 */
@@ -40,18 +46,20 @@ typedef struct
     fifo_int32 size;     /* 空间大小 */
 
     fifo_uint8* base;    /* 数据地址 */
-}fifo_cb;
+}fifo_cb_t;
+
+#pragma pack() // 恢复默认字节对齐
 
 /* @Function declaration */
-fifo_cb* fifo_create(fifo_uint32 size);
-void fifo_delete(fifo_cb* cb);
-fifo_uint32 fifo_getAvailable(fifo_cb* cb);
-fifo_uint32 fifo_getUsed(fifo_cb* cb);
-fifo_err fifo_pushBuf(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 len);
-fifo_err fifo_popBuf(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 len);
-fifo_err fifo_pushByte(fifo_cb* cb, fifo_uint8 dat);
-fifo_err fifo_popByte(fifo_cb* cb, fifo_uint8* dat);
-fifo_err fifo_query(fifo_cb* cb, fifo_uint8* dat, fifo_uint32 index);
-fifo_err fifo_clean(fifo_cb* cb);
+fifo_cb_t* fifo_create(fifo_uint32 size);
+void fifo_delete(fifo_cb_t* cb);
+fifo_uint32 fifo_getAvailable(fifo_cb_t* cb);
+fifo_uint32 fifo_getUsed(fifo_cb_t* cb);
+fifo_err fifo_pushBuf(fifo_cb_t* cb, fifo_uint8* dat, fifo_uint32 len);
+fifo_err fifo_popBuf(fifo_cb_t* cb, fifo_uint8* dat, fifo_uint32 len);
+fifo_err fifo_pushByte(fifo_cb_t* cb, fifo_uint8 dat);
+fifo_err fifo_popByte(fifo_cb_t* cb, fifo_uint8* dat);
+fifo_err fifo_query(fifo_cb_t* cb, fifo_uint8* dat, fifo_uint32 index);
+fifo_err fifo_clean(fifo_cb_t* cb);
 
 #endif
