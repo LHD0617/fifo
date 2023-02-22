@@ -12,6 +12,10 @@
 #ifndef __FIFO_H_
 #define __FIFO_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* @typedef */
 typedef         unsigned char           fifo_uint8;
 typedef         int                     fifo_int32;
@@ -65,5 +69,9 @@ fifo_err fifo_pushByte(fifo_cb_t* cb, fifo_uint8 dat);
 fifo_err fifo_popByte(fifo_cb_t* cb, fifo_uint8* dat);
 fifo_err fifo_query(fifo_cb_t* cb, fifo_uint8* dat, fifo_uint32 index);
 fifo_err fifo_clean(fifo_cb_t* cb);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
